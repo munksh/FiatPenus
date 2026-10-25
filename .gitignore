@@ -1,0 +1,14 @@
+RPMS/
+build-*/
+*.pro.user
+*.pro.user.*
+*.autosave
+Makefile
+.qmake.stash
+*.o
+moc_*.cpp
+moc_*.h
+qrc_*.cpp
+/harbour-fiatpenus
+__pycache__/
+documentation.list

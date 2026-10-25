@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256"><g fill="#E0AE4A"><circle cx="128" cy="128" r="128"/><rect x="128" y="0" width="128" height="128"/><rect x="0" y="128" width="128" height="128"/></g>
+<polygon points="60,104 128,58 196,104" fill="#F2E9D8"/>
+<rect x="64" y="106" width="128" height="12" fill="#F2E9D8"/>
+<rect x="74" y="124" width="16" height="64" fill="#F2E9D8"/>
+<rect x="166" y="124" width="16" height="64" fill="#F2E9D8"/>
+<rect x="60" y="190" width="136" height="12" rx="2" fill="#F2E9D8"/>
+<path d="M128 130 C 144 148, 150 160, 146 172 C 142 184, 114 184, 110 172
+         C 106 160, 116 150, 120 138 C 124 150, 128 152, 128 130 Z" fill="#F2E9D8"/></svg>

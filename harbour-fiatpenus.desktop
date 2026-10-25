@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+X-Nemo-Application-Type=silica-qt5
+Icon=harbour-fiatpenus
+Exec=harbour-fiatpenus
+Name=fiat penus
+Comment=Household lists, notes and photos, on the phone or shared through Pantry
+Comment[sv]=Hushållets listor, anteckningar och bilder, på telefonen eller delade via Pantry
+
+[X-Sailjail]
+Permissions=Internet;Pictures;Downloads;RemovableMedia;MediaIndexing
+OrganizationName=se.munkstolen
+ApplicationName=harbour-fiatpenus
