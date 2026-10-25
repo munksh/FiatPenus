@@ -38,7 +38,10 @@ Column {
     Label {
         x: Theme.horizontalPageMargin
         width: parent.width - Theme.horizontalPageMargin * 2
+        // On the phone's own household a server that is away changes nothing,
+        // so only a missing Pantry is worth saying there.
         visible: account.signedIn && account.pantryState !== "present" && account.pantryState !== "unknown"
+                 && (root.house === null || root.house.local !== true || account.pantryState === "missing")
         wrapMode: Text.WordWrap
         text: account.pantryState === "missing"
               ? qsTr("Pantry is not installed on %1. Someone with admin rights can add it from the Nextcloud app store.").arg(account.server.replace(/^https?:\/\//, ""))

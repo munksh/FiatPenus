@@ -34,6 +34,8 @@ Screenshots:
  - https://munkstolen.se/SFOS/fiatpenus1.png
  - https://munkstolen.se/SFOS/fiatpenus2.png
  - https://munkstolen.se/SFOS/fiatpenus3.png
+ - https://munkstolen.se/SFOS/fiatpenus4.png
+ - https://munkstolen.se/SFOS/fiatpenus5.png
 Custom:
   Repo: https://github.com/munksh/FiatPenus
 Links:
