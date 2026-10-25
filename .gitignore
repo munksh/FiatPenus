@@ -12,3 +12,4 @@ qrc_*.cpp
 /harbour-fiatpenus
 __pycache__/
 documentation.list
+.sfdk/
