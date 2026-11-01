@@ -1,6 +1,6 @@
 Name:       harbour-fiatpenus
 Summary:    fiat penus – household lists, notes and photos
-Version:    1.0
+Version:    1.1
 Release:    1
 License:    MIT
 URL:        https://github.com/munksh/FiatPenus
@@ -36,6 +36,7 @@ Screenshots:
  - https://munkstolen.se/SFOS/fiatpenus3.png
  - https://munkstolen.se/SFOS/fiatpenus4.png
  - https://munkstolen.se/SFOS/fiatpenus5.png
+ - https://munkstolen.se/SFOS/fiatpenus6.png
 Custom:
   Repo: https://github.com/munksh/FiatPenus
 Links:
@@ -66,6 +67,13 @@ desktop-file-install --delete-original \
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sun Nov 01 2026 Caesar Prometheus Ivarsson <caesar@munkstolen.se> - 1.1-1
+- Brings in the lists fiat agenda 2.0 kept on the phone: save them from
+  Agenda 2.1, then pull down on Lists and choose "Bring in lists from fiat
+  agenda". They land in This phone, with their categories and repeats.
+- A long line on the card fades at the ring instead of running under it.
+- Permissions: Documents, only to read the file fiat agenda saves there.
+
 * Wed Oct 21 2026 Caesar Prometheus Ivarsson <caesar@munkstolen.se> - 1.0-1
 - A household on the phone itself: lists, notes and photos with no account.
 - One front page with three sides, Lists, Notes and Photos, and the

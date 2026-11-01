@@ -7,6 +7,7 @@ import "../components"
 import "../js/util.js" as U
 import "../js/markdown.js" as Md
 import "../js/shelf.js" as Shelf
+import "../js/storage.js" as Storage
 
 // The front page: one household at a time, in three sides -- its lists, the
 // notes on its wall and its photo board. The first household is the phone's
@@ -54,6 +55,33 @@ Page {
     property string photoProblem: ""
     Timer { id: problemTimer; interval: 6000; onTriggered: page.photoProblem = "" }
 
+    // ---- lists from fiat agenda ----
+    // Agenda 2.0 kept lists of its own on the phone. Agenda 2.1 saves them in
+    // Documents; they come in here, into the phone's household.
+    readonly property string agendaFile: "fiat-agenda-lists.json"
+    property bool agendaWaiting: false
+    property string listsNote: ""
+    Timer { id: listsNoteTimer; interval: 8000; onTriggered: page.listsNote = "" }
+
+    function lookForAgenda() { agendaWaiting = files.documentExists(agendaFile) }
+
+    function importFromAgenda() {
+        var data = null
+        try { data = JSON.parse(files.readDocument(agendaFile)) } catch (e) { data = null }
+        var got = data ? Storage.importShelf(data) : null
+        if (got === null) {
+            listsNote = qsTr("The file from fiat agenda could not be read")
+        } else {
+            files.retireDocument(agendaFile)
+            listsNote = got.lists === 1 ? qsTr("1 list from fiat agenda")
+                                        : qsTr("%1 lists from fiat agenda").arg(got.lists)
+            if (!local) setHouse(phone, true)
+            loadHouse(false)
+        }
+        listsNoteTimer.restart()
+        lookForAgenda()
+    }
+
     readonly property var loosePhotos: {
         var out = []
         for (var i = 0; i < photos.length; ++i)
@@ -78,6 +106,7 @@ Page {
         if (seenOnce)
             loadHouse(false)
         seenOnce = true
+        lookForAgenda()
     }
     onRemoteChanged: refresh(false)
 
@@ -362,6 +391,7 @@ Page {
             title: page.openTotal === 0 ? qsTr("nothing to fix")
                  : page.openTotal === 1 ? qsTr("thing to fix") : qsTr("things to fix")
             showRing: true
+            details: page.listsNote !== "" ? [page.listsNote] : []
             done: page.doneTotal
             total: page.doneTotal + page.openTotal
             onModeChosen: page.setMode(mode)

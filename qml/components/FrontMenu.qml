@@ -45,6 +45,12 @@ PullDownMenu {
         onClicked: menu.host.refreshFromMenu()
     }
     MenuItem {
+        visible: menu.mode === "lists" && menu.host !== null && menu.host.agendaWaiting
+        text: qsTr("Bring in lists from fiat agenda")
+        color: FiatPenusTheme.primaryText
+        onClicked: menu.host.importFromAgenda()
+    }
+    MenuItem {
         visible: menu.mode === "lists" && menu.house !== null && U.can(menu.house, "canCreateLists")
         text: qsTr("New list")
         color: FiatPenusTheme.primaryText

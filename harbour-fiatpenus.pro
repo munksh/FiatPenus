@@ -64,6 +64,7 @@ REQUIRED_FILES = \
     qml/pages/images/family/harbour-fiatpassus.png \
     qml/pages/images/family/harbour-fiatratio.png \
     qml/pages/images/family/harbour-fiatvox.png \
+    qml/pages/images/family/harbour-fiattessera.png \
     LICENSE
 for(f, REQUIRED_FILES) {
     !exists($$PWD/$$f): error("Missing $$f -- expected it at $$PWD/$$f")

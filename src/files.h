@@ -22,8 +22,16 @@ public:
     // never touched.
     Q_INVOKABLE bool forget(const QString &path) const;
 
+    // Documents/<name>: whether it is there, its text, and, once brought in,
+    // renamed to <name without .json>.imported.json so it is not brought in
+    // twice. The lists fiat agenda 2.0 kept arrive this way.
+    Q_INVOKABLE bool documentExists(const QString &name) const;
+    Q_INVOKABLE QString readDocument(const QString &name) const;
+    Q_INVOKABLE bool retireDocument(const QString &name) const;
+
 private:
     QString folder() const;
+    QString documentPath(const QString &name) const;
 };
 
 #endif

@@ -424,3 +424,49 @@ function photoPath(id) {
     var p = rowOf("shelf_photos", id, photo)
     return p === null ? "" : filePath(p.fileId)
 }
+
+// ---- lists from fiat agenda ----
+
+// Brings in the lists fiat agenda 2.0 kept on the phone, as it saved them for
+// us: { format: "fiat-shelf", lists, items, categories }, rows with their own
+// ids. Everything gets a new id here; which item belongs to which list and
+// category is kept. All of it in one transaction, so a half-read file leaves
+// nothing behind. Returns { lists, items } brought in, or null.
+function importShelf(data) {
+    if (!data || data.format !== "fiat-shelf" || !data.lists) return null
+    var listIds = {}, catIds = {}, count = { lists: 0, items: 0 }
+    var num = function (v) { var n = parseInt(v, 10); return isNaN(n) ? 0 : n }
+    db().transaction(function (tx) {
+        var i, r
+        var lists = data.lists || [], cats = data.categories || [], items = data.items || []
+        for (i = 0; i < lists.length; i++) {
+            r = lists[i]
+            listIds[r.id] = parseInt(tx.executeSql(
+                "INSERT INTO shelf_lists (name, description, color, sortOrder, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?)",
+                [text(r.name), text(r.description), text(r.color), nextSort(tx, "shelf_lists"),
+                 num(r.createdAt), num(r.updatedAt)]).insertId, 10)
+            count.lists++
+        }
+        for (i = 0; i < cats.length; i++) {
+            r = cats[i]
+            catIds[r.id] = parseInt(tx.executeSql(
+                "INSERT INTO shelf_categories (listId, name, color, icon, sortOrder, createdAt) VALUES (?, ?, ?, ?, ?, ?)",
+                [num(r.listId) > 0 ? (listIds[r.listId] || 0) : 0, text(r.name), text(r.color), text(r.icon),
+                 nextSort(tx, "shelf_categories"), num(r.createdAt)]).insertId, 10)
+        }
+        for (i = 0; i < items.length; i++) {
+            r = items[i]
+            var listId = listIds[r.listId]
+            if (!listId) continue
+            tx.executeSql(
+                "INSERT INTO shelf_items (listId, name, description, quantity, categoryId, done, doneAt, rrule, repeatFromCompletion, deleteOnDone, nextDueAt, sortOrder, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                [listId, text(r.name), text(r.description), text(r.quantity),
+                 num(r.categoryId) > 0 ? (catIds[r.categoryId] || 0) : 0,
+                 num(r.done) ? 1 : 0, num(r.doneAt), text(r.rrule),
+                 num(r.repeatFromCompletion) ? 1 : 0, num(r.deleteOnDone) ? 1 : 0, num(r.nextDueAt),
+                 num(r.sortOrder), num(r.createdAt), num(r.updatedAt)])
+            count.items++
+        }
+    })
+    return count
+}

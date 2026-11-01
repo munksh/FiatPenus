@@ -73,6 +73,9 @@ Item {
             visible: text !== ""
             text: root.subtitle
             wrapMode: Text.WordWrap
+            // The parts are joined so they do not break apart; a line that is
+            // still too long fades at the ring rather than running under it.
+            truncationMode: TruncationMode.Fade
             color: FiatPenusTheme.secondaryText
             font.pixelSize: Theme.fontSizeExtraSmall
         }
